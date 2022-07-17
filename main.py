@@ -27,7 +27,7 @@ def main():
                 if event.key == pg.K_ESCAPE:
                     running = False
                 print(event.dict['unicode'])
-                # print(pg.key.name(event.key), event.)
+                # print(pg.key.name(event.key), event.) 
      
      
 # run the main function only if this module is executed as the main script
