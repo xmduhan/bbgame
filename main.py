@@ -6,7 +6,7 @@ from random import sample, choices
 def get_font_size(screen, text):
     """ """
     W, _ = screen.get_size()
-    print(f'{W=}')
+    # print(f'{W=}')
     font_size = W 
 
     while True:
@@ -43,9 +43,7 @@ def play(screen, text):
     # print(f'{h=}, {w=}')
 
     cursor = 0
-    running = True
-
-    while running and cursor <= len(text):
+    while cursor <= len(text):
         screen.fill(bg)
         horizontal = (W - w) // 2 
         vertical = (H - h) // 2 
@@ -56,17 +54,20 @@ def play(screen, text):
             surface = font.render(ch, 0, fg, bg)
             screen.blit(surface, (horizontal, vertical))
             horizontal += size[0]
+        
+        if cursor == len(text):
+            pg.display.flip()
+            break
+            
 
         for event in pg.event.get():
 
             if event.type == pg.QUIT:
-                running = False
-                break
+                return False
 
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
-                    running = False
-                    break
+                    return False
                 
                 if event.dict['unicode'] == text[cursor]:
                     cursor += 1
@@ -81,13 +82,13 @@ def play(screen, text):
                     
         pg.display.flip()
         
-        if cursor == len(text):
-            break
 
     audio_filename = 'audio/success2.wav'
     channel = pg.mixer.Sound(audio_filename).play()
     while channel.get_busy(): 
         pg.time.wait(100)
+
+    return True
 
 
 keys = 'asdfghjkl'
@@ -99,13 +100,14 @@ def main():
     pg.display.set_caption("打字练习")
      
     # Screen display mode
-    # screen = pg.display.set_mode((800,600))
-    screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
+    screen = pg.display.set_mode((800,600))
+    # screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
 
-    while True:
+    playing = True
+    while playing:
         # text = ''.join([sample(keys, 1)[0] for i in range(10)])
         text = ''.join(choices(keys, k=10))
-        play(screen, text)
+        playing = play(screen, text)
 
 if __name__=="__main__":
     main()
