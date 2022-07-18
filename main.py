@@ -1,4 +1,7 @@
 import pygame as pg
+from glob import glob
+from random import sample
+
 
 def get_font_size(screen, text):
     """ """
@@ -26,6 +29,7 @@ def get_font_size(screen, text):
 def play(screen, text):
     """ """
     W, H = screen.get_size()
+    typing_sound_list = glob('audio/key*.wav')
     # print(f"{W=}, {H=}")
 
     fg0 = 250, 240, 230
@@ -57,19 +61,31 @@ def play(screen, text):
 
             if event.type == pg.QUIT:
                 running = False
+                break
 
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     running = False
+                    break
                 
                 if event.dict['unicode'] == text[cursor]:
                     cursor += 1
+                    audio_filename = sample(typing_sound_list, 1)[0]
+                    pg.mixer.Sound(audio_filename).play()
+                    break
+                
+                if event.dict['unicode'] != '':
+                    audio_filename = 'audio/warning.wav'
+                    pg.mixer.Sound(audio_filename).play()
+                    break
+                    
         pg.display.flip()
 
  
 def main():
      
     pg.init()
+    pg.mixer.init(11025)  # raises exception on fail
     pg.display.set_caption("打字练习")
      
     # Screen display mode
@@ -77,7 +93,7 @@ def main():
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
 
     play(screen, 'asdfgjkl')
-    play(screen, 'abcdefgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    play(screen, 'abcd')
 
 if __name__=="__main__":
     main()
