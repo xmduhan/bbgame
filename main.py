@@ -1,6 +1,6 @@
 import pygame as pg
 from glob import glob
-from random import sample
+from random import sample, choices
 
 
 def get_font_size(screen, text):
@@ -45,7 +45,7 @@ def play(screen, text):
     cursor = 0
     running = True
 
-    while running and cursor < len(text):
+    while running and cursor <= len(text):
         screen.fill(bg)
         horizontal = (W - w) // 2 
         vertical = (H - h) // 2 
@@ -80,7 +80,17 @@ def play(screen, text):
                     break
                     
         pg.display.flip()
+        
+        if cursor == len(text):
+            break
 
+    audio_filename = 'audio/success2.wav'
+    channel = pg.mixer.Sound(audio_filename).play()
+    while channel.get_busy(): 
+        pg.time.wait(100)
+
+
+keys = 'asdfghjkl'
  
 def main():
      
@@ -92,10 +102,10 @@ def main():
     # screen = pg.display.set_mode((800,600))
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
 
-    play(screen, 'asdfgjkl')
-    play(screen, 'abcd')
+    while True:
+        # text = ''.join([sample(keys, 1)[0] for i in range(10)])
+        text = ''.join(choices(keys, k=10))
+        play(screen, text)
 
 if __name__=="__main__":
     main()
-
-     
