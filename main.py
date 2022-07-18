@@ -1,21 +1,42 @@
-from locale import currency
 import pygame as pg
 
+def get_font_size(screen, text):
+    """ """
+    W, _ = screen.get_size()
+    print(f'{W=}')
+    font_size = W 
+
+    while True:
+        font_size = int(font_size)
+        font = pg.font.Font(None, font_size)
+        size = font.size(text)
+
+        if size[0] > W * .91:
+            font_size *= .9
+            continue
+
+        if size[0] < W * .89:
+            font_size *= 1.1
+            continue
+        
+        break
+    return font_size
 
 
 def play(screen, text):
     """ """
     W, H = screen.get_size()
-    print(f"{W=}, {H=}")
+    # print(f"{W=}, {H=}")
 
     fg0 = 250, 240, 230
     fg1 = 255, 0, 0  
     bg = 5, 5, 5
 
-    font = pg.font.Font(None, 500)
+    font_size = get_font_size(screen, text)
+    font = pg.font.Font(None, font_size)
     size = font.size(text)
     w, h = size
-    print(f'{h=}, {w=}')
+    # print(f'{h=}, {w=}')
 
     cursor = 0
     running = True
@@ -45,8 +66,6 @@ def play(screen, text):
                     cursor += 1
         pg.display.flip()
 
-
-
  
 def main():
      
@@ -58,6 +77,7 @@ def main():
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
 
     play(screen, 'asdfgjkl')
+    play(screen, 'abcdefgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
 if __name__=="__main__":
     main()
