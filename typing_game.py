@@ -82,7 +82,7 @@ def play_with(screen, text, success):
                     
         pg.display.flip()
 
-    audio_filename = 'audio/success2.wav'
+    audio_filename = 'audio/success1.wav'
     channel = pg.mixer.Sound(audio_filename).play()
     while channel.get_busy(): 
         pg.time.wait(100)
