@@ -1,4 +1,5 @@
 import pygame as pg
+import pygame_menu as pgm
 from glob import glob
 from random import sample, choices
 
@@ -24,7 +25,7 @@ def get_font_size(screen, text):
         break
     return font_size
 
-def play_with(screen, text, success):
+def play(screen, text, success):
     """ """
     W, H = screen.get_size()
     typing_sound_list = glob('audio/key*.wav')
@@ -38,7 +39,7 @@ def play_with(screen, text, success):
     size = font.size(text)
     w, h = size
 
-    success_font = pg.font.Font(None, 80)
+    success_font = pg.font.Font('font/kaiti.ttf', 80)
 
     cursor = 0
     while cursor <= len(text):
@@ -52,7 +53,7 @@ def play_with(screen, text, success):
             screen.blit(surface, (horizontal, vertical))
             horizontal += size[0]
 
-        success_text = f'Success: {success}'
+        success_text = f'成功: {success}'
         surface = success_font.render(success_text, 0, fg0, bg)
         screen.blit(surface, (0, 0))
         
@@ -89,13 +90,30 @@ def play_with(screen, text, success):
 
     return True
 
-keys = 'asdfghjkl'
 
-def play(screen):
+def left_hand_basic(screen):
     """ """
+    keys = 'asdfg'
     success = 0
     playing = True
     while playing:
         text = ''.join(choices(keys, k=10))
-        playing = play_with(screen, text, success=success)
+        playing = play(screen, text, success=success)
         success += 1
+    
+def main(screen=None):
+    """ """
+    if screen is None:
+        pg.init()
+        pg.mixer.init(11025)  
+        pg.display.set_caption("打字练习")
+        screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
+
+    menu = pgm.Menu('Typing', 400, 300, theme=pgm.themes.THEME_BLUE, onclose=pgm.events.CLOSE)
+    menu.add.button('Left hand basic', lambda : left_hand_basic(screen))
+    menu.add.button('Quit', pgm.events.CLOSE)
+    menu.mainloop(screen)
+
+
+if __name__=="__main__":
+    main()
