@@ -3,6 +3,7 @@ import pygame_menu as pgm
 from glob import glob
 from random import sample, choices
 
+
 def get_font_size(screen, text):
     """ """
     W, _ = screen.get_size()
@@ -93,7 +94,7 @@ def play(screen, text, success):
 
 def left_hand_basic(screen):
     """ """
-    keys = 'asdfg'
+    keys = 'sdf'
     success = 0
     playing = True
     while playing:
@@ -101,17 +102,60 @@ def left_hand_basic(screen):
         playing = play(screen, text, success=success)
         success += 1
     
+
+THEME = pgm.themes.Theme(
+    background_color=(40, 41, 35),
+    cursor_color=(255, 255, 255),
+    cursor_selection_color=(80, 80, 80, 120),
+    scrollbar_color=(39, 41, 42),
+    scrollbar_slider_color=(65, 66, 67),
+    scrollbar_slider_hover_color=(90, 89, 88),
+    selection_color=(255, 255, 255),
+    title_background_color=(47, 48, 51),
+    title_font_color=(215, 215, 215),
+    widget_font_color=(200, 200, 200),
+    title_font='font/kaiti.ttf',
+    widget_font='font/kaiti.ttf',
+    widget_font_size=40,
+)
+
 def main(screen=None):
     """ """
     if screen is None:
         pg.init()
         pg.mixer.init(11025)  
         pg.display.set_caption("打字练习")
-        screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
+        screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
+        
+    W, H = screen.get_size()
 
-    menu = pgm.Menu('Typing', 400, 300, theme=pgm.themes.THEME_BLUE, onclose=pgm.events.CLOSE)
-    menu.add.button('Left hand basic', lambda : left_hand_basic(screen))
-    menu.add.button('Quit', pgm.events.CLOSE)
+    menu = pgm.Menu(
+        '打字练习', int(W * .6), int(H * .6), theme=THEME, 
+        columns=3, rows=7, onclose=pgm.events.CLOSE,
+    )
+    menu.add.button('左手初级', lambda : left_hand_basic(screen))
+    menu.add.button('右手初级', lambda : left_hand_basic(screen))
+    menu.add.button('左右手初级', lambda : left_hand_basic(screen))
+    menu.add.button('左手进阶', lambda : left_hand_basic(screen))
+    menu.add.button('左手进阶', lambda : left_hand_basic(screen))
+    menu.add.button('左右手进阶', lambda : left_hand_basic(screen))
+    menu.add.button('小游戏', lambda : left_hand_basic(screen))
+
+    menu.add.button('左手高级', lambda : left_hand_basic(screen))
+    menu.add.button('右手高级', lambda : left_hand_basic(screen))
+    menu.add.button('左右手高级', lambda : left_hand_basic(screen))
+    menu.add.button('数字', lambda : left_hand_basic(screen))
+    menu.add.button('符号', lambda : left_hand_basic(screen))
+    menu.add.button('大写字母', lambda : left_hand_basic(screen))
+    menu.add.button('综合练习', lambda : left_hand_basic(screen))
+
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.button('退出', pgm.events.CLOSE)
     menu.mainloop(screen)
 
 
