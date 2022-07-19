@@ -1,3 +1,4 @@
+from symtable import Symbol
 import pygame as pg
 import pygame_menu as pgm
 from glob import glob
@@ -42,7 +43,8 @@ def get_font_size(screen, text):
         break
     return font_size
 
-def get_formula(max_value, symbol):
+def get_formula(max_value):
+    symbol = sample(['+', '-'], 1)[0]
     t = randint(0, max_value)
     a = randint(0, t)
     b = t - a
@@ -125,35 +127,32 @@ def play(screen, formula, result, title, error=0):
 
 
 menu2lambda = {
-    '10以内加法': lambda : get_formula(10, '+'),
-    '15以内加法': lambda : get_formula(15, '+'),
-    '20以内加法': lambda : get_formula(20, '+'),
-    '30以内加法': lambda : get_formula(30, '+'),
-    '50以内加法': lambda : get_formula(50, '+'),
-    '100以内加法': lambda : get_formula(100, '+'),
-    '10以内加法': lambda : get_formula(10, '-'),
-    '15以内加法': lambda : get_formula(15, '-'),
-    '20以内加法': lambda : get_formula(20, '-'),
-    '30以内加法': lambda : get_formula(30, '-'),
-    '50以内加法': lambda : get_formula(50, '-'),
-    '100以内加法': lambda : get_formula(100, '-'),
+    '10以内加减法': lambda : get_formula(10),
+    '15以内加减法': lambda : get_formula(15),
+    '20以内加减法': lambda : get_formula(20),
+    '30以内加减法': lambda : get_formula(30),
+    '50以内加减法': lambda : get_formula(50),
+    '100以内加减法': lambda : get_formula(100),
 }
 
 def play_menu(screen, menu_text, times=20):
     """ """
     error = 0
     get_formula = menu2lambda.get(menu_text)
-
-
     playing = True
+    formula_list = []
     for i in range(1, times+1):
-        formula, result = get_formula()
+        while True:
+            formula, result = get_formula()
+            if formula not in formula_list:
+                break
         title = f'关卡: {menu_text}({i}/{times})'
         playing, error = play(screen, formula, result, title, error)
+        formula_list.append(formula)
         if not playing:
             return
 
-    pct = (1 - error / (length * times)) * 100
+    pct = (1 - error / times) * 100
     if pct >= 90:
         message = f'恭喜您闯关成功! 您的正确率为: {pct}%, 很棒哦! :-)'
     else:
@@ -182,23 +181,15 @@ def main(screen=None):
 
     menu = pgm.Menu(
         '口算练习', int(W * .6), int(H * .6), theme=THEME, 
-        columns=3, rows=7, onclose=pgm.events.CLOSE,
+        columns=2, rows=7, onclose=pgm.events.CLOSE,
     )
-    menu.add.button('10以内加法', lambda : play_menu(screen, '10以内加法'))
-    menu.add.button('15以内加法', lambda : play_menu(screen, '15以内加法'))
-    menu.add.button('20以内加法', lambda : play_menu(screen, '20以内加法'))
-    menu.add.button('30以内加法', lambda : play_menu(screen, '30以内加法'))
-    menu.add.button('50以内加法', lambda : play_menu(screen, '50以内加法'))
-    menu.add.button('100以内加法', lambda : play_menu(screen, '100以内加法'))
+    menu.add.button('10以内加减法', lambda : play_menu(screen, '10以内加减法'))
+    menu.add.button('15以内加减法', lambda : play_menu(screen, '15以内加减法'))
+    menu.add.button('20以内加减法', lambda : play_menu(screen, '20以内加减法'))
+    menu.add.button('30以内加减法', lambda : play_menu(screen, '30以内加减法'))
+    menu.add.button('50以内加减法', lambda : play_menu(screen, '50以内加减法'))
+    menu.add.button('100以内加减法', lambda : play_menu(screen, '100以内加减法'))
     # menu.add.button('小游戏', lambda : play_with(screen))
-    menu.add.label('')
-
-    menu.add.button('10以内减法', lambda : play_menu(screen, '10以内减法'))
-    menu.add.button('15以内减法', lambda : play_menu(screen, '15以内减法'))
-    menu.add.button('20以内减法', lambda : play_menu(screen, '20以内减法'))
-    menu.add.button('30以内减法', lambda : play_menu(screen, '30以内减法'))
-    menu.add.button('50以内减法', lambda : play_menu(screen, '50以内减法'))
-    menu.add.button('100以内减法', lambda : play_menu(screen, '100以内减法'))
     menu.add.label('')
 
     menu.add.label('')
