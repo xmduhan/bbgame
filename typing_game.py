@@ -91,17 +91,45 @@ def play(screen, text, success):
 
     return True
 
-
-def left_hand_basic(screen):
+def play_with(screen, keys):
     """ """
-    keys = 'sdf'
     success = 0
     playing = True
     while playing:
         text = ''.join(choices(keys, k=10))
         playing = play(screen, text, success=success)
         success += 1
+
+
+def left_hand_basic(screen):
+    """ """
+    play_with(screen, 'sdf')
+
+
+def right_hand_basic(screen):
+    """ """
+    play_with(screen, 'jkl')
+
+
+def double_hand_basic(screen):
+    """ """
+    play_with(screen, 'sdfjkl')
+
     
+def left_hand_step_by_step(screen):
+    """ """
+    play_with(screen, 'asdfg')
+
+
+def right_hand_step_by_step(screen):
+    """ """
+    play_with(screen, 'hjkl;')
+
+
+def double_hand_step_by_step(screen):
+    """ """
+    play_with(screen, 'asdfghjkl;')
+
 
 THEME = pgm.themes.Theme(
     background_color=(40, 41, 35),
@@ -134,19 +162,19 @@ def main(screen=None):
         columns=3, rows=7, onclose=pgm.events.CLOSE,
     )
     menu.add.button('左手初级', lambda : left_hand_basic(screen))
-    menu.add.button('右手初级', lambda : left_hand_basic(screen))
-    menu.add.button('左右手初级', lambda : left_hand_basic(screen))
-    menu.add.button('左手进阶', lambda : left_hand_basic(screen))
-    menu.add.button('左手进阶', lambda : left_hand_basic(screen))
-    menu.add.button('左右手进阶', lambda : left_hand_basic(screen))
+    menu.add.button('右手初级', lambda : right_hand_basic(screen))
+    menu.add.button('双手初级', lambda : double_hand_basic(screen))
+    menu.add.button('左手进阶', lambda : left_hand_step_by_step(screen))
+    menu.add.button('左手进阶', lambda : right_hand_step_by_step(screen))
+    menu.add.button('双手进阶', lambda : double_hand_step_by_step(screen))
     menu.add.button('小游戏', lambda : left_hand_basic(screen))
 
     menu.add.button('左手高级', lambda : left_hand_basic(screen))
     menu.add.button('右手高级', lambda : left_hand_basic(screen))
-    menu.add.button('左右手高级', lambda : left_hand_basic(screen))
-    menu.add.button('数字', lambda : left_hand_basic(screen))
-    menu.add.button('符号', lambda : left_hand_basic(screen))
+    menu.add.button('双手高级', lambda : left_hand_basic(screen))
+    menu.add.button('数字练习', lambda : left_hand_basic(screen))
     menu.add.button('大写字母', lambda : left_hand_basic(screen))
+    menu.add.button('符号练习', lambda : left_hand_basic(screen))
     menu.add.button('综合练习', lambda : left_hand_basic(screen))
 
     menu.add.label('')

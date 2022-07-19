@@ -23,7 +23,7 @@ def main():
      
     pg.init()
     pg.mixer.init(11025)  # raises exception on fail
-    pg.display.set_caption("打字练习")
+    pg.display.set_caption("宝宝小游戏")
      
     # Screen display mode
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
