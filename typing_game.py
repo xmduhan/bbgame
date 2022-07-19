@@ -1,9 +1,9 @@
-from unicodedata import digit
 import pygame as pg
 import pygame_menu as pgm
 from glob import glob
 from random import sample, choices
 import string
+import audio
 
 THEME = pgm.themes.Theme(
     background_color=(40, 41, 35),
@@ -46,7 +46,6 @@ def get_font_size(screen, text):
 def play(screen, text, title, error):
     """ """
     W, H = screen.get_size()
-    typing_sound_list = glob('audio/key*.wav')
 
     fg0 = 250, 240, 230
     fg1 = 255, 0, 0  
@@ -90,20 +89,17 @@ def play(screen, text, title, error):
                 
                 if event.dict['unicode'] == text[cursor]:
                     cursor += 1
-                    audio_filename = sample(typing_sound_list, 1)[0]
-                    pg.mixer.Sound(audio_filename).play()
+                    audio.keyboard()
                     break
                 
                 if event.dict['unicode'] != '':
-                    audio_filename = 'audio/warning.wav'
-                    pg.mixer.Sound(audio_filename).play()
+                    audio.warn()
                     error += 1
                     break
                     
         pg.display.flip()
 
-    audio_filename = 'audio/success1.wav'
-    pg.mixer.Sound(audio_filename).play()
+    audio.passit()
 
     return True, error
 
@@ -140,8 +136,10 @@ def play_menu(screen, menu_text, length=10, times=5):
 
     pct = (1 - error / (length * times)) * 100
     if pct >= 95:
+        audio.success()
         message = f'恭喜您闯关成功! 您的正确率为: {pct}%, 很棒哦! :-)'
     else:
+        audio.fail()
         message = f'您出错多了点, 不过不要气馁清继续努力! 当前正确率: {pct}%'
     
     W, H = screen.get_size()

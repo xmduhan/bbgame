@@ -1,9 +1,9 @@
-from symtable import Symbol
 import pygame as pg
 import pygame_menu as pgm
 from glob import glob
 from random import sample, randint
 import string
+import audio
 
 THEME = pgm.themes.Theme(
     background_color=(40, 41, 35),
@@ -56,7 +56,6 @@ def get_formula(max_value):
 def play(screen, formula, result, title, error=0):
     """ """
     W, H = screen.get_size()
-    typing_sound_list = glob('audio/key*.wav')
 
     fg = 250, 240, 230
     bg = 5, 5, 5
@@ -97,19 +96,15 @@ def play(screen, formula, result, title, error=0):
                 if event.key == pg.K_BACKSPACE:
                     if len(result_string) > 0:
                         result_string = result_string[:-1]
-                        audio_filename = sample(typing_sound_list, 1)[0]
-                        pg.mixer.Sound(audio_filename).play()
+                        audio.keyboard()
                         continue
-                    audio_filename = 'audio/warning.wav'
-                    pg.mixer.Sound(audio_filename).play()
+                    audio.warn()
 
                 if event.key == pg.K_RETURN:
                     if eval(formula) == int(result_string):
-                        audio_filename = 'audio/success1.wav'
-                        pg.mixer.Sound(audio_filename).play()
+                        audio.passit()
                     else:
-                        audio_filename = 'audio/warning.wav'
-                        pg.mixer.Sound(audio_filename).play()
+                        audio.warn()
                         error += 1
                     return True, error
                 
@@ -117,11 +112,9 @@ def play(screen, formula, result, title, error=0):
                 if ch in string.digits:
                     if len(result_string) < 3:
                         result_string += ch
-                        audio_filename = sample(typing_sound_list, 1)[0]
-                        pg.mixer.Sound(audio_filename).play()
+                        audio.keyboard()
                         continue
-                audio_filename = 'audio/warning.wav'
-                pg.mixer.Sound(audio_filename).play()
+                audio.warn()
                     
         pg.display.flip()
 
@@ -154,8 +147,10 @@ def play_menu(screen, menu_text, times=20):
 
     pct = (1 - error / times) * 100
     if pct >= 90:
+        audio.success()
         message = f'恭喜您闯关成功! 您的正确率为: {pct}%, 很棒哦! :-)'
     else:
+        audio.fail()
         message = f'您出错多了点, 不过不要气馁清继续努力! 当前正确率: {pct}%'
     
     W, H = screen.get_size()
