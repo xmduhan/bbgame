@@ -21,6 +21,22 @@ THEME = pgm.themes.Theme(
     widget_font_size=100,
 )
 
+THEME1 = pgm.themes.Theme(
+    background_color=(40, 41, 35),
+    cursor_color=(255, 255, 255),
+    cursor_selection_color=(80, 80, 80, 120),
+    scrollbar_color=(39, 41, 42),
+    scrollbar_slider_color=(65, 66, 67),
+    scrollbar_slider_hover_color=(90, 89, 88),
+    selection_color=(255, 255, 255),
+    title_background_color=(47, 48, 51),
+    title_font_color=(215, 215, 215),
+    widget_font_color=(200, 200, 200),
+    title_font='font/kaiti.ttf',
+    widget_font='font/kaiti.ttf',
+    widget_font_size=80,
+)
+
 def get_font_size(screen, text):
     """ """
     W, _ = screen.get_size()
@@ -120,7 +136,7 @@ menu2keys = {
         string.ascii_lowercase + string.digits + string.punctuation
 }
 
-def play_menu(screen, menu_text, length=10, times=5):
+def play_menu(screen, menu_text, length=10, times=3):
     """ """
     error = 0
     keys = menu2keys.get(menu_text)
@@ -135,14 +151,14 @@ def play_menu(screen, menu_text, length=10, times=5):
     pct = (1 - error / (length * times)) * 100
     if pct >= 95:
         audio.success()
-        message = f'恭喜您闯关成功! 您的正确率为: {pct:.1f}%, 很棒哦! :-)'
+        message = f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)'
     else:
         # audio.fail()
-        message = f'您出错多了点, 不过不要气馁请继续努力! 当前正确率: {pct:.1f}%'
+        message = f'您出错多了点, 不过不要气馁请继续努力! 当前正确率: {pct:.0f}%'
     
     W, H = screen.get_size()
     menu = pgm.Menu(
-        f'关卡: {menu_text}', int(W * .6), int(H * .3), theme=THEME, 
+        f'关卡: {menu_text}', int(W * .98), int(H * .5), theme=THEME1, 
         onclose=pgm.events.CLOSE,
     )
     menu.add.label(message)
