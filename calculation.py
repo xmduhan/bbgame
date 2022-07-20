@@ -18,7 +18,7 @@ THEME = pgm.themes.Theme(
     widget_font_color=(200, 200, 200),
     title_font='font/kaiti.ttf',
     widget_font='font/kaiti.ttf',
-    widget_font_size=40,
+    widget_font_size=100,
 )
 
 def get_font_size(screen, text):
@@ -178,7 +178,7 @@ def main(screen=None):
     W, H = screen.get_size()
 
     menu = pgm.Menu(
-        '口算练习', int(W * .6), int(H * .6), theme=THEME, 
+        '口算练习', int(W * 1), int(H * 1), theme=THEME, 
         columns=2, rows=7, onclose=pgm.events.CLOSE,
     )
     menu.add.button('10以内加减法', lambda : play_menu(screen, '10以内加减法'))

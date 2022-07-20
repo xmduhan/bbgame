@@ -18,7 +18,7 @@ THEME = pgm.themes.Theme(
     widget_font_color=(200, 200, 200),
     title_font='font/kaiti.ttf',
     widget_font='font/kaiti.ttf',
-    widget_font_size=40,
+    widget_font_size=100,
 )
 
 def get_font_size(screen, text):
@@ -117,9 +117,7 @@ menu2keys = {
     '大写字母': string.punctuation,
     '符号练习': string.ascii_uppercase,
     '综合练习': string.ascii_uppercase + \
-        string.ascii_lowercase + \
-        string.digits + \
-        string.punctuation
+        string.ascii_lowercase + string.digits + string.punctuation
 }
 
 def play_menu(screen, menu_text, length=10, times=5):
@@ -164,7 +162,7 @@ def main(screen=None):
     W, H = screen.get_size()
 
     menu = pgm.Menu(
-        '打字练习', int(W * .6), int(H * .6), theme=THEME, 
+        '打字练习', int(W * 1), int(H * 1), theme=THEME, 
         columns=3, rows=7, onclose=pgm.events.CLOSE,
     )
     menu.add.button('左手初级', lambda : play_menu(screen, '左手初级'))
