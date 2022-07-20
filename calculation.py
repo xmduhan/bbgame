@@ -101,6 +101,9 @@ def play(screen, formula, result, title, error=0):
                     audio.warn()
 
                 if event.key == pg.K_RETURN:
+                    if len(result_string) == 0:
+                        audio.warn()
+                        continue
                     if eval(formula) == int(result_string):
                         audio.passit()
                     else:
@@ -150,8 +153,8 @@ def play_menu(screen, menu_text, times=20):
         audio.success()
         message = f'恭喜您闯关成功! 您的正确率为: {pct:.1f}%, 很棒哦! :-)'
     else:
-        audio.fail()
-        message = f'您出错多了点, 不过不要气馁清继续努力! 当前正确率: {pct:.1f}%'
+        # audio.fail()
+        message = f'您出错多了点, 不过不要气馁请继续努力! 当前正确率: {pct:.1f}%'
     
     W, H = screen.get_size()
     menu = pgm.Menu(
