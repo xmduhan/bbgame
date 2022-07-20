@@ -17,7 +17,7 @@ THEME = pgm.themes.Theme(
     widget_font_color=(200, 200, 200),
     title_font='font/kaiti.ttf',
     widget_font='font/kaiti.ttf',
-    widget_font_size=40,
+    widget_font_size=100,
 )
  
 def main():
@@ -30,7 +30,7 @@ def main():
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
     W, H = screen.get_size()
 
-    menu = pgm.Menu('宝宝小游戏', int(W * .6), int(H * .6), theme=THEME)
+    menu = pgm.Menu('宝宝小游戏', int(W * .9), int(H * .9), theme=THEME)
     menu.add.button('打字练习', lambda : typing_game.main(screen))
     menu.add.button('口算练习', lambda : calculation.main(screen))
     menu.add.button('退出', pgm.events.EXIT)

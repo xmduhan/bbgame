@@ -185,7 +185,7 @@ def main(screen=None):
     menu.add.button('右手初级', lambda : play_menu(screen, '右手初级'))
     menu.add.button('双手初级', lambda : play_menu(screen, '双手初级'))
     menu.add.button('左手进阶', lambda : play_menu(screen, '左手进阶'))
-    menu.add.button('左手进阶', lambda : play_menu(screen, '左手进阶'))
+    menu.add.button('右手进阶', lambda : play_menu(screen, '左手进阶'))
     menu.add.button('双手进阶', lambda : play_menu(screen, '双手进阶'))
     # menu.add.button('小游戏', lambda : play_with(screen))
     menu.add.label('')
