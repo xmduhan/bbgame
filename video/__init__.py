@@ -1,17 +1,17 @@
 from moviepy.editor import VideoFileClip
 from glob import glob
+from random import sample
 
 
 def get_filename():
     """ """
-    return glob('video/**/*.mp4')[0]
+    return sample(glob('video/**/*.mp4'), k=1)[0]
 
 def play(filename, screen):
     """ """
     W, H = screen.get_size()
     video = VideoFileClip(filename, target_resolution=(H, W))
     video.preview(fullscreen=True)
-    # video.preview(fullscreen=False)
 
 def play_random(screen):
     """ """
