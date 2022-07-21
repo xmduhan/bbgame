@@ -4,6 +4,7 @@ from glob import glob
 from random import sample, choices
 import string
 import audio
+import video
 
 THEME = pgm.themes.Theme(
     background_color=(40, 41, 35),
@@ -149,7 +150,8 @@ def play_menu(screen, menu_text, length=10, times=3):
             return
 
     pct = (1 - error / (length * times)) * 100
-    if pct >= 95:
+    success = pct >= 95
+    if success:
         audio.success()
         message = f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)'
     else:
@@ -166,6 +168,8 @@ def play_menu(screen, menu_text, length=10, times=3):
     menu.add.button('确定', pgm.events.CLOSE)
     menu.mainloop(screen)
     
+    if success:
+        video.play_random(screen)
 
 def main(screen=None):
     """ """
