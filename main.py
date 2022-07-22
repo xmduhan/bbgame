@@ -33,7 +33,7 @@ def main():
     menu = pgm.Menu('宝宝小游戏', int(W * .9), int(H * .9), theme=THEME)
     menu.add.button('打字练习', lambda : typing_game.main(screen))
     menu.add.button('口算练习', lambda : calculation.main(screen))
-    menu.add.button('退出', pgm.events.EXIT)
+    # menu.add.button('退出', pgm.events.EXIT)
     menu.mainloop(screen)
 
 if __name__=="__main__":
