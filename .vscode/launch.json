@@ -11,6 +11,26 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true
+        },
+        {
+            "name": "single",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/duhan/source/bbgame/.pygame/bin/yt-dlp",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "python":"/home/duhan/source/bbgame/.pygame/bin/python",
+            "args": ["https://www.bilibili.com/bangumi/play/ep375764"]
+        },
+        {
+            "name": "playlist",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/duhan/source/bbgame/.pygame/bin/yt-dlp",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "python":"/home/duhan/source/bbgame/.pygame/bin/python",
+            "args": ["-vU", "https://www.bilibili.com/bangumi/media/md28233264"]
         }
     ]
 }
