@@ -17,3 +17,8 @@ def play_random(screen):
     """ """
     filename = get_filename()
     play(screen, filename)
+
+def get_duration(filename):
+    """ """
+    video = VideoFileClip(filename)
+    return video.duration 

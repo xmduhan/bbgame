@@ -5,10 +5,19 @@ import video
 import ui
 import os
 from more_itertools import chunked
+import database as db
+
 
 def play(screen, filename):
     """ """
-    video.play(screen, filename)
+    count = round(video.get_duration(filename) / 60)
+    result = ui.comfirm(screen, '请确认', f'看这个视频会耗费{count}个金币, 确定要继续吗?')
+    if result:
+        cnt = db.get_gold_count() 
+        if cnt < count:
+            ui.show_message(screen, '出错啦', '您的金币不够啊! 去做些练习赚金币吧! :-)')
+            return
+        video.play(screen, filename)
 
 
 def browse(screen, path):
