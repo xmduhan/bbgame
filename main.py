@@ -2,6 +2,7 @@ import pygame as pg
 import pygame_menu as pgm
 import typing_game
 import calculation
+import watch_video
 
 
 THEME = pgm.themes.Theme(
@@ -33,6 +34,7 @@ def main():
     menu = pgm.Menu('宝宝小游戏', int(W * .9), int(H * .9), theme=THEME)
     menu.add.button('打字练习', lambda : typing_game.main(screen))
     menu.add.button('口算练习', lambda : calculation.main(screen))
+    menu.add.button('看看视频', lambda : watch_video.main(screen))
     # menu.add.button('退出', pgm.events.EXIT)
     menu.mainloop(screen)
 
