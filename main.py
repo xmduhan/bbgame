@@ -31,7 +31,7 @@ def main():
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
     W, H = screen.get_size()
 
-    menu = pgm.Menu('宝宝小游戏', int(W * .9), int(H * .9), theme=THEME)
+    menu = pgm.Menu('宝宝小游戏', int(W * 1), int(H * 1), theme=THEME)
     menu.add.button('打字练习', lambda : typing_game.main(screen))
     menu.add.button('口算练习', lambda : calculation.main(screen))
     menu.add.button('看看视频', lambda : watch_video.main(screen))

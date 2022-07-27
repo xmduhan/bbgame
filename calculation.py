@@ -168,7 +168,7 @@ def play_menu(screen, menu_text, times=5):
         audio.success()
         video.play_random(screen)
     else:
-        ui.show_message(screen, title, f'您出错多了点, 不过不要气馁请继续努力! {pct:.0f}%')
+        ui.show_message(screen, title, f'您出错多了点, 不要气馁请继续努力! {pct:.0f}%')
             
 
 def main(screen=None):
