@@ -193,7 +193,8 @@ def play_menu(screen, menu_text, times=10):
     menu.add.button('确定', pgm.events.CLOSE)
     menu.mainloop(screen)
     if success:
-        video.play_random(screen)
+        # video.play_random(screen)
+        pass
             
 
 def main(screen=None):
