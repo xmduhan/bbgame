@@ -28,7 +28,7 @@ def get_font_size(screen, text):
     """ """
     W, _ = screen.get_size()
     # print(f'{W=}')
-    font_size = W 
+    font_size = W
 
     while True:
         font_size = int(font_size)
@@ -42,7 +42,7 @@ def get_font_size(screen, text):
         if size[0] < W * .89:
             font_size *= 1.1
             continue
-        
+
         break
     return font_size
 
@@ -51,7 +51,7 @@ def play(screen, text, title, error):
     W, H = screen.get_size()
 
     fg0 = 250, 240, 230
-    fg1 = 255, 0, 0  
+    fg1 = 255, 0, 0
     bg = 5, 5, 5
 
     font_size = get_font_size(screen, text)
@@ -64,8 +64,8 @@ def play(screen, text, title, error):
     cursor = 0
     while cursor <= len(text):
         screen.fill(bg)
-        horizontal = (W - w) // 2 
-        vertical = (H - h) // 2 
+        horizontal = (W - w) // 2
+        vertical = (H - h) // 2
         for i, ch in enumerate(text):
             size = font.size(ch)
             fg = fg1 if cursor > i else fg0
@@ -73,10 +73,10 @@ def play(screen, text, title, error):
             screen.blit(surface, (horizontal, vertical))
             horizontal += size[0]
 
-        hint = f'{title}   出错: {error}' 
+        hint = f'{title}   出错: {error}'
         surface = title_font.render(hint, 0, fg0, bg)
         screen.blit(surface, (0, 0))
-        
+
         if cursor == len(text):
             pg.display.flip()
             break
@@ -89,17 +89,17 @@ def play(screen, text, title, error):
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     return False, error
-                
+
                 if event.dict['unicode'] == text[cursor]:
                     cursor += 1
                     audio.keyboard()
                     break
-                
+
                 if event.dict['unicode'] != '':
                     audio.warn()
                     error += 1
                     break
-                    
+
         pg.display.flip()
 
     audio.passit()
@@ -136,7 +136,7 @@ def play_menu(screen, menu_text, length=10, times=3):
             return
 
     pct = (1 - error / (length * times)) * 100
-    title = f'关卡: {menu_text}', 
+    title = f'关卡: {menu_text}',
     success = pct >= 95
     if success:
         ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)')
@@ -150,14 +150,14 @@ def main(screen=None):
     """ """
     if screen is None:
         pg.init()
-        pg.mixer.init(11025)  
+        pg.mixer.init(11025)
         pg.display.set_caption("打字练习")
         screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
-        
+
     W, H = screen.get_size()
 
     menu = pgm.Menu(
-        '打字练习', int(W * 1), int(H * 1), theme=THEME, 
+        '打字练习', int(W * 1), int(H * 1), theme=THEME,
         columns=3, rows=7, onclose=pgm.events.CLOSE,
     )
     menu.add.button('左手初级', lambda : play_menu(screen, '左手初级'))
