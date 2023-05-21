@@ -2,7 +2,7 @@ import pygame as pg
 import pygame_menu as pgm
 import typing_game
 import calculation
-import watch_video
+import english
 
 
 THEME = pgm.themes.Theme(
@@ -20,13 +20,13 @@ THEME = pgm.themes.Theme(
     widget_font='font/kaiti.ttf',
     widget_font_size=100,
 )
- 
+
 def main():
-     
+
     pg.init()
     pg.mixer.init(11025)  # raises exception on fail
     pg.display.set_caption("宝宝小游戏")
-     
+
     # Screen display mode
     screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
     W, H = screen.get_size()
@@ -34,8 +34,8 @@ def main():
     menu = pgm.Menu('宝宝小游戏', int(W * 1), int(H * 1), theme=THEME)
     menu.add.button('打字练习', lambda : typing_game.main(screen))
     menu.add.button('口算练习', lambda : calculation.main(screen))
-    menu.add.button('看看视频', lambda : watch_video.main(screen))
-    # menu.add.button('退出', pgm.events.EXIT)
+    menu.add.button('英语练习', lambda : english.main(screen))
+    menu.add.button('退出', pgm.events.EXIT)
     menu.mainloop(screen)
 
 if __name__=="__main__":
