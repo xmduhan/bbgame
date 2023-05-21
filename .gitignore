@@ -3,3 +3,4 @@ __pycache__/
 video/
 .ipynb_checkpoints/
 db.sqlite3*
+.python-version
