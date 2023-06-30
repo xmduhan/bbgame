@@ -3,6 +3,7 @@ import pygame_menu as pgm
 import typing_game
 import calculation
 import english
+import chinese
 
 
 THEME = pgm.themes.Theme(
@@ -34,7 +35,8 @@ def main():
     menu = pgm.Menu('宝宝小游戏', int(W * 1), int(H * 1), theme=THEME)
     menu.add.button('打字练习', lambda : typing_game.main(screen))
     menu.add.button('口算练习', lambda : calculation.main(screen))
-    menu.add.button('英语练习', lambda : english.main(screen))
+    menu.add.button('英语单词', lambda : english.main(screen))
+    menu.add.button('汉字学习', lambda : chinese.main(screen))
     menu.add.button('退出', pgm.events.EXIT)
     menu.mainloop(screen)
 
