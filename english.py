@@ -92,14 +92,14 @@ def play(screen, title, text):
 
         pg.display.flip()
 
-books = [ '一年级上册', '一年级下册', '二年级下册', '二年级下册']
+books = [ 'Part1', 'Part2', 'Part3', 'Part4']
 
 def play_menu(screen, book):
     """ """
     error = 0
     playing = True
 
-    df = pd.read_excel('data/chinese.xlsx')
+    df = pd.read_excel('data/english.xlsx')
     texts = list(df[book])
     i = 0
     while True:
@@ -114,13 +114,13 @@ def main(screen=None):
     if screen is None:
         pg.init()
         pg.mixer.init(11025)
-        pg.display.set_caption("汉字学习")
+        pg.display.set_caption("英语单词")
         screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
 
     W, H = screen.get_size()
 
     menu = pgm.Menu(
-        '汉字学习', int(W * 1), int(H * 1), theme=THEME,
+        '英语单词', int(W * 1), int(H * 1), theme=THEME,
         columns=1, rows=5, onclose=pgm.events.CLOSE,
     )
     menu.add.button(books[0], lambda : play_menu(screen, books[0]))
