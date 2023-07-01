@@ -92,7 +92,7 @@ def play(screen, title, text):
 
         pg.display.flip()
 
-books = [ '一年级上册', '一年级下册', '二年级下册', '二年级下册']
+books = [ '一年级上册', '一年级下册', '二年级上册', '二年级下册']
 
 def play_menu(screen, book):
     """ """
@@ -100,7 +100,9 @@ def play_menu(screen, book):
     playing = True
 
     df = pd.read_excel('data/chinese.xlsx')
-    texts = list(df[book])
+    texts = list(df[book].dropna())
+    if not texts: return
+
     i = 0
     while True:
         title = f'{book}: ({i+1}/{len(texts)})'
