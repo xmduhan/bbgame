@@ -1,4 +1,6 @@
+from re import S
 import pygame as pg
+import ui
 import pygame_menu as pgm
 from glob import glob
 from random import sample, randint
@@ -20,22 +22,6 @@ THEME = pgm.themes.Theme(
     title_font='font/kaiti.ttf',
     widget_font='font/kaiti.ttf',
     widget_font_size=100,
-)
-
-THEME1 = pgm.themes.Theme(
-    background_color=(40, 41, 35),
-    cursor_color=(255, 255, 255),
-    cursor_selection_color=(80, 80, 80, 120),
-    scrollbar_color=(39, 41, 42),
-    scrollbar_slider_color=(65, 66, 67),
-    scrollbar_slider_hover_color=(90, 89, 88),
-    selection_color=(255, 255, 255),
-    title_background_color=(47, 48, 51),
-    title_font_color=(215, 215, 215),
-    widget_font_color=(200, 200, 200),
-    title_font='font/kaiti.ttf',
-    widget_font='font/kaiti.ttf',
-    widget_font_size=80,
 )
 
 def get_font_size(screen, text):
@@ -155,7 +141,7 @@ menu2lambda = {
     '100以内加减法': lambda : get_formula(100),
 }
 
-def play_menu(screen, menu_text, times=10):
+def play_menu(screen, menu_text, times=5):
     """ """
     error = 0
     get_formula = menu2lambda.get(menu_text)
@@ -176,8 +162,11 @@ def play_menu(screen, menu_text, times=10):
 
     pct = (1 - error / times) * 100
     success = pct >= 90
+    title = f'关卡: {menu_text}', 
     if success:
+        ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)') 
         audio.success()
+<<<<<<< HEAD
         message = f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)'
     else:
         # audio.fail()
@@ -195,6 +184,11 @@ def play_menu(screen, menu_text, times=10):
     if success:
         # video.play_random(screen)
         pass
+=======
+        video.play_random(screen)
+    else:
+        ui.show_message(screen, title, f'您出错多了点, 不要气馁请继续努力! {pct:.0f}%')
+>>>>>>> 50494fe2a8b8262f94a994bc8a9d1334658e1ab2
             
 
 def main(screen=None):

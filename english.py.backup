@@ -28,7 +28,7 @@ def get_font_size(screen, text):
     """ """
     W, _ = screen.get_size()
     # print(f'{W=}')
-    font_size = W 
+    font_size = W
 
     while True:
         font_size = int(font_size)
@@ -42,7 +42,7 @@ def get_font_size(screen, text):
         if size[0] < W * .89:
             font_size *= 1.1
             continue
-        
+
         break
     return font_size
 
@@ -51,7 +51,7 @@ def play(screen, text, title, error):
     W, H = screen.get_size()
 
     fg0 = 250, 240, 230
-    fg1 = 255, 0, 0  
+    fg1 = 255, 0, 0
     bg = 5, 5, 5
 
     font_size = get_font_size(screen, text)
@@ -64,8 +64,8 @@ def play(screen, text, title, error):
     cursor = 0
     while cursor <= len(text):
         screen.fill(bg)
-        horizontal = (W - w) // 2 
-        vertical = (H - h) // 2 
+        horizontal = (W - w) // 2
+        vertical = (H - h) // 2
         for i, ch in enumerate(text):
             size = font.size(ch)
             fg = fg1 if cursor > i else fg0
@@ -73,10 +73,10 @@ def play(screen, text, title, error):
             screen.blit(surface, (horizontal, vertical))
             horizontal += size[0]
 
-        hint = f'{title}   出错: {error}' 
+        hint = f'{title}   出错: {error}'
         surface = title_font.render(hint, 0, fg0, bg)
         screen.blit(surface, (0, 0))
-        
+
         if cursor == len(text):
             pg.display.flip()
             break
@@ -89,17 +89,17 @@ def play(screen, text, title, error):
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     return False, error
-                
+
                 if event.dict['unicode'] == text[cursor]:
                     cursor += 1
                     audio.keyboard()
                     break
-                
+
                 if event.dict['unicode'] != '':
-                    # audio.warn()
-                    # error += 1
+                    audio.warn()
+                    error += 1
                     break
-                    
+
         pg.display.flip()
 
     audio.passit()
@@ -107,14 +107,23 @@ def play(screen, text, title, error):
     return True, error
 
 menu2keys = {
+    '左手初级': 'sdf',
+    '右手初级': 'jkl',
     '双手初级': 'sdfjkl',
-    '双手进阶1': 'asdfghjkl;',
-    '双手进阶2': 'asdfghjkl;weruio',
-    '双手进阶3': 'asdfghjkl;weruioxcvnm,.',
-    '双手高级': 'asdfgqwertzxcvbhjkl;yuiopnm,.',
+    '左手进阶': 'asdfg',
+    '左手进阶': 'hjkl;',
+    '双手进阶': 'asdfghjkl;',
+    '左手高级': 'asdfgqwertzxcvb',
+    '右手高级': 'hjkl;yuiopnm,./',
+    '双手高级': 'asdfgqwertzxcvbhjkl;yuiopnm,./',
+    '数字练习': string.digits,
+    '大写字母': string.punctuation,
+    '符号练习': string.ascii_uppercase,
+    '综合练习': string.ascii_uppercase + \
+        string.ascii_lowercase + string.digits + string.punctuation
 }
 
-def play_menu(screen, menu_text, length=10, times=5):
+def play_menu(screen, menu_text, length=10, times=3):
     """ """
     error = 0
     keys = menu2keys.get(menu_text)
@@ -127,56 +136,53 @@ def play_menu(screen, menu_text, length=10, times=5):
             return
 
     pct = (1 - error / (length * times)) * 100
-    title = f'关卡: {menu_text}', 
+    title = f'关卡: {menu_text}',
     success = pct >= 95
     if success:
         ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)')
         audio.success()
-<<<<<<< HEAD
-        message = f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)'
-    else:
-        # audio.fail()
-        message = f'您出错多了点, 不过不要气馁请继续努力! 当前正确率: {pct:.0f}%'
-    
-    W, H = screen.get_size()
-    menu = pgm.Menu(
-        f'关卡: {menu_text}', int(W * .98), int(H * .5), theme=THEME1, 
-        onclose=pgm.events.CLOSE,
-    )
-    menu.add.label(message)
-    menu.add.label('')
-    menu.add.button('确定', pgm.events.CLOSE)
-    menu.mainloop(screen)
-    
-    if success:
-        # video.play_random(screen)
-        pass
-=======
         # 成功奖励
         video.play_random(screen)
     else:
         ui.show_message(screen, title, f'您出错多了点, 不要气馁请继续努力! {pct:.0f}%')
->>>>>>> 50494fe2a8b8262f94a994bc8a9d1334658e1ab2
 
 def main(screen=None):
     """ """
     if screen is None:
         pg.init()
-        pg.mixer.init(11025)  
+        pg.mixer.init(11025)
         pg.display.set_caption("打字练习")
         screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
-        
+
     W, H = screen.get_size()
 
     menu = pgm.Menu(
-        '打字练习', int(W * 1), int(H * 1), theme=THEME, 
+        '打字练习', int(W * 1), int(H * 1), theme=THEME,
         columns=3, rows=7, onclose=pgm.events.CLOSE,
     )
+    menu.add.button('左手初级', lambda : play_menu(screen, '左手初级'))
+    menu.add.button('右手初级', lambda : play_menu(screen, '右手初级'))
     menu.add.button('双手初级', lambda : play_menu(screen, '双手初级'))
-    menu.add.button('双手进阶1', lambda : play_menu(screen, '双手进阶1'))
-    menu.add.button('双手进阶2', lambda : play_menu(screen, '双手进阶2'))
-    menu.add.button('双手进阶3', lambda : play_menu(screen, '双手进阶3'))
+    menu.add.button('左手进阶', lambda : play_menu(screen, '左手进阶'))
+    menu.add.button('右手进阶', lambda : play_menu(screen, '左手进阶'))
+    menu.add.button('双手进阶', lambda : play_menu(screen, '双手进阶'))
+    # menu.add.button('小游戏', lambda : play_with(screen))
+    menu.add.label('')
+
+    menu.add.button('左手高级', lambda : play_menu(screen, '左手高级'))
+    menu.add.button('右手高级', lambda : play_menu(screen, '右手高级'))
     menu.add.button('双手高级', lambda : play_menu(screen, '双手高级'))
+    menu.add.button('数字练习', lambda : play_menu(screen, '数字练习'))
+    menu.add.button('大写字母', lambda : play_menu(screen, '大写字母'))
+    menu.add.button('符号练习', lambda : play_menu(screen, '符号练习'))
+    menu.add.button('综合练习', lambda : play_menu(screen, '综合练习'))
+
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
+    menu.add.label('')
     menu.add.button('退出', pgm.events.CLOSE)
     menu.mainloop(screen)
 
