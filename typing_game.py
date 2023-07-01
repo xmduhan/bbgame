@@ -130,33 +130,11 @@ def play_menu(screen, menu_text, length=10, times=5):
     title = f'关卡: {menu_text}', 
     success = pct >= 95
     if success:
-        ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)')
         audio.success()
-<<<<<<< HEAD
-        message = f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)'
-    else:
-        # audio.fail()
-        message = f'您出错多了点, 不过不要气馁请继续努力! 当前正确率: {pct:.0f}%'
-    
-    W, H = screen.get_size()
-    menu = pgm.Menu(
-        f'关卡: {menu_text}', int(W * .98), int(H * .5), theme=THEME1, 
-        onclose=pgm.events.CLOSE,
-    )
-    menu.add.label(message)
-    menu.add.label('')
-    menu.add.button('确定', pgm.events.CLOSE)
-    menu.mainloop(screen)
-    
-    if success:
-        # video.play_random(screen)
-        pass
-=======
-        # 成功奖励
-        video.play_random(screen)
+        ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)')
     else:
         ui.show_message(screen, title, f'您出错多了点, 不要气馁请继续努力! {pct:.0f}%')
->>>>>>> 50494fe2a8b8262f94a994bc8a9d1334658e1ab2
+        # audio.fail()
 
 def main(screen=None):
     """ """
