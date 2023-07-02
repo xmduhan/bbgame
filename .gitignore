@@ -2,6 +2,10 @@
 __pycache__/
 video/
 .ipynb_checkpoints/
+<<<<<<< HEAD
+.python-version
+=======
 db.sqlite3*
 .python-version
 .envrc
+>>>>>>> 50494fe2a8b8262f94a994bc8a9d1334658e1ab2

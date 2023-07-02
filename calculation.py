@@ -164,10 +164,10 @@ def play_menu(screen, menu_text, times=5):
     success = pct >= 90
     title = f'关卡: {menu_text}', 
     if success:
-        ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)') 
         audio.success()
-        video.play_random(screen)
+        ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)') 
     else:
+        # audio.fail()
         ui.show_message(screen, title, f'您出错多了点, 不要气馁请继续努力! {pct:.0f}%')
             
 

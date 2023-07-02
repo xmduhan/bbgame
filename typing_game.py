@@ -96,8 +96,8 @@ def play(screen, text, title, error):
                     break
                 
                 if event.dict['unicode'] != '':
-                    audio.warn()
-                    error += 1
+                    # audio.warn()
+                    # error += 1
                     break
                     
         pg.display.flip()
@@ -107,23 +107,14 @@ def play(screen, text, title, error):
     return True, error
 
 menu2keys = {
-    '左手初级': 'sdf',
-    '右手初级': 'jkl',
     '双手初级': 'sdfjkl',
-    '左手进阶': 'asdfg',
-    '左手进阶': 'hjkl;',
-    '双手进阶': 'asdfghjkl;',
-    '左手高级': 'asdfgqwertzxcvb',
-    '右手高级': 'hjkl;yuiopnm,./',
-    '双手高级': 'asdfgqwertzxcvbhjkl;yuiopnm,./',
-    '数字练习': string.digits,
-    '大写字母': string.punctuation,
-    '符号练习': string.ascii_uppercase,
-    '综合练习': string.ascii_uppercase + \
-        string.ascii_lowercase + string.digits + string.punctuation
+    '双手进阶1': 'asdfghjkl;',
+    '双手进阶2': 'asdfghjkl;weruio',
+    '双手进阶3': 'asdfghjkl;weruioxcvnm,.',
+    '双手高级': 'asdfgqwertzxcvbhjkl;yuiopnm,.',
 }
 
-def play_menu(screen, menu_text, length=10, times=3):
+def play_menu(screen, menu_text, length=10, times=5):
     """ """
     error = 0
     keys = menu2keys.get(menu_text)
@@ -139,12 +130,11 @@ def play_menu(screen, menu_text, length=10, times=3):
     title = f'关卡: {menu_text}', 
     success = pct >= 95
     if success:
-        ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)')
         audio.success()
-        # 成功奖励
-        video.play_random(screen)
+        ui.show_message(screen, title, f'恭喜您闯关成功! 您的正确率为: {pct:.0f}%, 很棒哦! :-)')
     else:
         ui.show_message(screen, title, f'您出错多了点, 不要气馁请继续努力! {pct:.0f}%')
+        # audio.fail()
 
 def main(screen=None):
     """ """
@@ -160,29 +150,11 @@ def main(screen=None):
         '打字练习', int(W * 1), int(H * 1), theme=THEME, 
         columns=3, rows=7, onclose=pgm.events.CLOSE,
     )
-    menu.add.button('左手初级', lambda : play_menu(screen, '左手初级'))
-    menu.add.button('右手初级', lambda : play_menu(screen, '右手初级'))
     menu.add.button('双手初级', lambda : play_menu(screen, '双手初级'))
-    menu.add.button('左手进阶', lambda : play_menu(screen, '左手进阶'))
-    menu.add.button('右手进阶', lambda : play_menu(screen, '左手进阶'))
-    menu.add.button('双手进阶', lambda : play_menu(screen, '双手进阶'))
-    # menu.add.button('小游戏', lambda : play_with(screen))
-    menu.add.label('')
-
-    menu.add.button('左手高级', lambda : play_menu(screen, '左手高级'))
-    menu.add.button('右手高级', lambda : play_menu(screen, '右手高级'))
+    menu.add.button('双手进阶1', lambda : play_menu(screen, '双手进阶1'))
+    menu.add.button('双手进阶2', lambda : play_menu(screen, '双手进阶2'))
+    menu.add.button('双手进阶3', lambda : play_menu(screen, '双手进阶3'))
     menu.add.button('双手高级', lambda : play_menu(screen, '双手高级'))
-    menu.add.button('数字练习', lambda : play_menu(screen, '数字练习'))
-    menu.add.button('大写字母', lambda : play_menu(screen, '大写字母'))
-    menu.add.button('符号练习', lambda : play_menu(screen, '符号练习'))
-    menu.add.button('综合练习', lambda : play_menu(screen, '综合练习'))
-
-    menu.add.label('')
-    menu.add.label('')
-    menu.add.label('')
-    menu.add.label('')
-    menu.add.label('')
-    menu.add.label('')
     menu.add.button('退出', pgm.events.CLOSE)
     menu.mainloop(screen)
 
